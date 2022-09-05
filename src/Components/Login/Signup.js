@@ -41,7 +41,7 @@ const form = () => {
           style={{ marginTop: "20px" }}
         >
           {/* login */}
-          <div className="col-md-4 m-auto col-xs-8 col-sm-6  bg-white justify-center border border-2 rounded-lg border-black">
+          <div className="col-md-4 m-auto col-xs-8 col-sm-6  bg-white justify-center border border-1 rounded-lg border-dark">
             <div className="p-3">
               <img
                 className="w-40 h-20 m-auto"
@@ -62,7 +62,7 @@ const form = () => {
                     </label>
                     <br />
                     <Field
-                      className="my-1 mx-1 p-2 w-full border border-2 border-black"
+                      className="my-1 mx-1 p-2 w-full border border-1 rounded-md border-dark"
                       type="text"
                       name="email"
                       placeholder="email"
@@ -88,7 +88,7 @@ const form = () => {
                       Enter Password{" "}
                     </label>
                     <Field
-                      className="my-1 p-2 mx-1 w-full border border-2 border-black"
+                      className="my-1 p-2 mx-1 w-full border border-1 rounded-md border-dark"
                       type="password"
                       name="password"
                       placeholder="Password"
@@ -116,7 +116,7 @@ const form = () => {
                     </label>
 
                     <Field
-                      className="my-1 p-2 mx-1 w-full border border-2 border-black"
+                      className="my-1 p-2 mx-1 w-full border border-1 rounded-md border-dark"
                       type="password"
                       name="passwordConfirm"
                       placeholder="Confirm Password"
@@ -140,11 +140,8 @@ const form = () => {
                     <br />
                   </div>
 
-                  <button
-                    className=" m-2 p-1 bg-yellow-400 rounded-md hover:bg-gradient-to-t from-yellow-500 to-yellow-400"
-                    type="submit"
-                  >
-                    Submit{" "}
+                  <button className=" m-2 p-1 bg-yellow-400 rounded-md hover:bg-gradient-to-t from-yellow-500 to-yellow-400">
+                    Create account{" "}
                   </button>
                 </Form>
               </Formik>

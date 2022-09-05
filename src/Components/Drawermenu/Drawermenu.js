@@ -2,23 +2,18 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import {
-  Box,
-  Typography,
-  IconButton,
-  ListItemButton,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Box, IconButton, ListItemButton, List, ListItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { dressActions } from "../../Redux_Store/Dresses/dressSlice";
-
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
 const Drawermenu = () => {
   //const islogged = useSelector((state) => state.auth.logged);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isDraweropen, setIsDrawerOpen] = React.useState(false);
-
+  const { auth } = useAuth();
   const menuContents = {
     Trending: ["Best Sellers", "New Releases ", "Movers and Shakers"],
     Department: [
@@ -30,28 +25,49 @@ const Drawermenu = () => {
       "Science and Technology ",
     ],
     Settings: [
-      "your account",
-      "settings",
-      "signIn",
-      // {
-      //   title: "Your Account ",
-      //   path: "/account",
-      // },
-      // {
-      //   title: "Settings ",
-      //   path: "/settings",
-      // },
-      // islogged
-      //   ? {
-      //       title: "sign Out",
-      //       path: "/signout",
-      //     }
-      //   : {
-      //       title: "sign in",
-      //       path: "/signout",
-      //     },
+      // "your account",
+      // "settings",
+      // "signIn",
+      {
+        title: "Your Account ",
+        path: "/account",
+      },
+      {
+        title: "Settings ",
+        path: "/settings",
+      },
+      auth
+        ? {
+            title: "sign Out",
+            path: "/signout",
+          }
+        : {
+            title: "sign in",
+            path: "/login",
+          },
     ],
   };
+
+  function getPaths(data, id) {
+    return (
+      <ListItem key={id} disablePadding>
+        <ListItemButton
+          onClick={() => {
+            setIsDrawerOpen(false);
+            navigate(data.path);
+          }}
+          sx={{
+            "&:hover": {
+              color: "black",
+              backgroundColor: "#b9bcbf",
+            },
+          }}
+        >
+          {data?.title}
+        </ListItemButton>
+      </ListItem>
+    );
+  }
 
   return (
     <>
@@ -143,21 +159,7 @@ const Drawermenu = () => {
               <span className="font-bold text-2xl">Settings </span>
             </ListItem>
 
-            {menuContents.Settings.map((data, id) => (
-              <ListItem key={id} disablePadding>
-                <ListItemButton
-                  onClick={() => setIsDrawerOpen(false)}
-                  sx={{
-                    "&:hover": {
-                      color: "black",
-                      backgroundColor: "#b9bcbf",
-                    },
-                  }}
-                >
-                  {data}
-                </ListItemButton>
-              </ListItem>
-            ))}
+            {menuContents.Settings.map((data, id) => getPaths(data, id))}
           </List>
         </Box>
       </Drawer>

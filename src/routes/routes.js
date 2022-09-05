@@ -6,19 +6,21 @@ import Accounts from "../Components/pages/AccountPage/Account";
 
 export const routes = [
   {
-    path: "/accounts",
+    path: "/account",
     name: "Account",
     component: Accounts,
     topHeader: true,
-    admin: true,
+    role: "user",
     banner: false,
   },
+
   {
     path: "/home",
     name: "Home",
     component: Home,
     topHeader: true,
-    admin: true,
+    role: "guest",
+
     banner: true,
   },
   {
@@ -26,7 +28,7 @@ export const routes = [
     name: "Loginform",
     component: LoginForm,
     topHeader: false,
-    admin: true,
+    role: "guest",
     banner: false,
   },
   {
@@ -34,31 +36,31 @@ export const routes = [
     name: "signup",
     component: SignupForm,
     topHeader: false,
-    admin: true,
     banner: false,
+    role: "guest",
   },
   {
     path: "/cart",
     name: "cart",
     component: CartComponent,
     topHeader: true,
-    admin: true,
     banner: false,
+    role: "user",
   },
   {
     path: "*",
     name: "notfound",
     component: NotfoundPage,
     topHeader: false,
-    admin: true,
     banner: false,
+    role: "guest",
   },
   {
     path: "/dress",
     name: "dress",
     component: Dress,
     topHeader: true,
-    admin: true,
     banner: false,
+    role: "guest",
   },
 ];

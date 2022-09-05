@@ -1,16 +1,29 @@
-import React from "react";
+import React, { Suspense, Spinner } from "react";
 import Header from "./../Components/Hea/Header";
 import Banner from "../Components/pages/Homepage/HomeBanner";
-import { Outlet } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 const Layout = (props) => {
-  console.log("props for banner", props.banner);
   return (
     <>
       {props.topheader && <Header></Header>}
-      {props.banner && <Banner />}
+      {props.banner && (
+        <Suspense fallback={<h1>banner Loading</h1>}>
+          <Banner />
+        </Suspense>
+      )}
 
       {/* <Outlet /> */}
-      {props.children}
+      <Suspense
+        fallback={
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        }
+      >
+        {props.children}
+      </Suspense>
     </>
   );
 };

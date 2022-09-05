@@ -3,34 +3,29 @@ import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link, NavLink } from "react-router-dom";
 import WarningIcon from "@mui/icons-material/Warning";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const form = () => {
-  var phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const FormComponent = () => {
+  // var phoneRegExp =
+  //   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/home";
+
   const validationSchema = yup.object({
-    // name: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().required().min(6).max(15),
   });
   let initialValues = {
-    //  name: "",
     email: "",
     password: "",
-    // mobile: "",
-    //brief: "",
   };
 
   function submitFunc(values) {
-    console.log("clicked");
     console.log("form values  :", values);
+    navigate(from, { replace: true });
   }
-
-  // const emailValid = (values) => {
-  //   let error;
-  //   if (!values) error = "Email is mandatory";
-
-  //   return error;
-  // };
 
   return (
     <>
@@ -56,7 +51,7 @@ const form = () => {
                     <label className="m-auto fw-bolder " htmlFor="name">
                       Enter Email{" "}
                     </label>
-                    <br />
+
                     <Field
                       className="my-1 mx-1 px-2 w-full border border-2 border-black"
                       type="text"
@@ -64,10 +59,10 @@ const form = () => {
                       placeholder="email"
                       // validate={emailValid}
                     ></Field>
-                    <br />
+
                     <ErrorMessage name="email">
                       {(msg) => (
-                        <div className="m-2  flex p-2 flex-grow border-2 text-center justify-center rounded-lg border-red-400 text-red-500">
+                        <div className="m-1 p-1  flex flex-grow border-2 text-center justify-center rounded-lg border-red-400 text-red-500">
                           <img
                             className="w-5 h-5 mt-1"
                             src="https://thumbs.dreamstime.com/b/warning-icon-sign-flat-style-isolated-caution-symbol-warning-icon-sign-flat-style-isolated-caution-symbol-your-web-162484612.jpg"
@@ -83,7 +78,7 @@ const form = () => {
                     <label htmlFor="name" className="fw-bolder">
                       Enter Email{" "}
                     </label>
-                    <br />
+
                     <Field
                       className="my-1 px-2 mx-1 w-full border border-2 border-black"
                       type="password"
@@ -91,11 +86,10 @@ const form = () => {
                       placeholder="Password"
                       // validate={emailValid}
                     ></Field>
-                    <br />
 
                     <ErrorMessage name="password">
                       {(msg) => (
-                        <div className="m-2 flex p-2 border-2 text-center justify-center rounded-lg border-red-400 text-red-500">
+                        <div className="m-1 flex p-1 border-2 text-center justify-center rounded-lg border-red-400 text-red-500">
                           <img
                             className="w-5 h-5 mt-1"
                             src="https://thumbs.dreamstime.com/b/warning-icon-sign-flat-style-isolated-caution-symbol-warning-icon-sign-flat-style-isolated-caution-symbol-your-web-162484612.jpg"
@@ -109,7 +103,7 @@ const form = () => {
                     <br />
                   </div>
                   <button
-                    className=" m-3 p-1 bg-yellow-400 rounded-md hover:bg-gradient-to-t from-yellow-500 to-yellow-400"
+                    className=" m-1 p-1 bg-yellow-400 rounded-md hover:bg-gradient-to-t from-yellow-500 to-yellow-400"
                     type="submit"
                   >
                     Submit{" "}
@@ -136,4 +130,4 @@ const form = () => {
   );
 };
 
-export default form;
+export default FormComponent;

@@ -1,22 +1,30 @@
 import "./App.css";
 import { React } from "react";
-import Header from "./Components/Hea/Header";
-import DressFeed from "./Components/Dress/ProductFeed";
 import { useSelector } from "react-redux";
 import { NavLink, Routes, Route, Navigate } from "react-router-dom";
-import { LoginForm, SignupForm, CartComponent } from "./Components";
 import { routes } from "./routes";
 import Layout from "./Layout/Layout";
+import useAuth from "./hooks/useAuth";
+import RequireAuth from "./Components/RequireAuth";
 function App() {
-  const showHome = useSelector((state) => state.home.showHome);
-  const isDressOpen = useSelector((state) => state.dress.showDressComponent);
-  let componentPresent = [isDressOpen];
-  const check = componentPresent.some((valid) => valid === true);
-
+  // setting the route through the layout component
   const getRoutes = (route, key) => {
     let Component = route?.component;
-    // console.log("banner value", route.banner);
-
+    if (route?.role === "user") {
+      return (
+        <Route
+          key={key}
+          path={route?.path}
+          element={
+            <Layout topheader={route?.topHeader} banner={route?.banner}>
+              <RequireAuth role={route?.role}>
+                <Component />
+              </RequireAuth>
+            </Layout>
+          }
+        />
+      );
+    }
     return (
       <Route
         key={key}
@@ -33,25 +41,12 @@ function App() {
   return (
     <div className="bg-gray-100">
       <title>Amazon</title>
-
-      {/* <Header></Header> */}
       <Routes>
         {routes.map((route, key) => {
           return getRoutes(route, key);
         })}
+        <Route path="/" element={<Navigate to="/home" replace />} />
       </Routes>
-
-      {/* Banner */}
-
-      {!check && (
-        <main className="max relative -w-screen-2xl mx-auto -z-0">
-          {/* <Banner /> */}
-        </main>
-      )}
-
-      <div className="relative  h-fit z-0">{/* <DressFeed /> */}</div>
-
-      {isDressOpen && <DressFeed />}
     </div>
   );
 }

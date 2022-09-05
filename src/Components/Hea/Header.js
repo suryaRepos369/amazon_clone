@@ -1,15 +1,14 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Drawer from "@mui/material/Drawer";
 import { useDispatch, useSelector } from "react-redux/";
-import { dressActions } from "../../Redux_Store/Dresses/dressSlice";
 import MenuItem from "../Drawermenu/Drawermenu";
 import { Link, useNavigate, NavLink } from "react-router-dom";
-import { Banner } from "../../Components";
+import useAuth from "./../../hooks/useAuth";
 
 const Header = (props) => {
+  const { auth } = useAuth();
   const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.dress.count);
   const dress = useSelector((state) => state.dress.dressDetail);
@@ -52,16 +51,26 @@ const Header = (props) => {
 
         {/* Right */}
         <div className="mx-6 flex md:text-sm  text-white items-center text-xs space-x-6 whitespace-nowrap">
-          <div
-            onClick={signinHandler}
-            className="text-white mx-1 link flex flex-col justify-around "
-          >
-            <p className="m-1">Hello SignIn </p>
-            <p className="font-bold">Account&List</p>
-          </div>
+          {auth ? (
+            <div
+              onClick={signinHandler}
+              className="text-white mx-1 link flex flex-col justify-around "
+            >
+              <p className="m-1">Hello {"surya"} </p>
+              <p className="font-bold">Account&List</p>
+            </div>
+          ) : (
+            <div
+              onClick={signinHandler}
+              className="text-white mx-1 link flex flex-col justify-around "
+            >
+              <p className="m-1 mb-0 link">Hello </p>
+              <p className="font-bold link">Signin </p>
+            </div>
+          )}
 
           <div className="link">
-            <p className="font-bold mb-0">Orders</p>
+            <p className="font-bold mb-0 mt-1">Orders</p>
 
             <p>Returns</p>
           </div>

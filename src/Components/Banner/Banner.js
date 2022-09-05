@@ -1,6 +1,9 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import b1 from "./amazon_b1.jpg";
+import b2 from "./amazon_b2.jpg";
+import b3 from "./amazon_b3.jpg";
 
 const Banner = () => {
   return (
@@ -14,27 +17,15 @@ const Banner = () => {
         interval={3000}
       >
         <div>
-          <img
-            loading="lazy"
-            src="https://links.papareact.com/gi1"
-            alt=""
-          ></img>
+          <img loading="lazy" src={b1} alt=""></img>
         </div>
 
         <div>
-          <img
-            loading="lazy"
-            src="https://links.papareact.com/6ff"
-            alt=""
-          ></img>
+          <img loading="lazy" src={b2} alt=""></img>
         </div>
 
         <div>
-          <img
-            loading="lazy"
-            src="https://links.papareact.com/7ma"
-            alt=""
-          ></img>
+          <img loading="lazy" src={b3} alt=""></img>
         </div>
       </Carousel>
     </div>
