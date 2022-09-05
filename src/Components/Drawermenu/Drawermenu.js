@@ -1,7 +1,7 @@
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
-import { useDispatch, useSelector } from "react-redux/es/exports";
+import { useDispatch } from "react-redux/es/exports";
 import { Box, IconButton, ListItemButton, List, ListItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { dressActions } from "../../Redux_Store/Dresses/dressSlice";

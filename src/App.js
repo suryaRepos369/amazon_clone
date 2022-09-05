@@ -1,12 +1,23 @@
 import "./App.css";
-import { React } from "react";
-import { useSelector } from "react-redux";
-import { NavLink, Routes, Route, Navigate } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { routes } from "./routes";
 import Layout from "./Layout/Layout";
-import useAuth from "./hooks/useAuth";
 import RequireAuth from "./Components/RequireAuth";
+//import { db } from "./firebaseAuth/auth";
+//import { collection, getDocs } from "firebase/firestore";
 function App() {
+  //const [user, setUser] = useState([]);
+  // const userRef = collection(db, "users");
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const data = await getDocs(userRef);
+  //     setUser(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //     console.log("user", user);
+  //   };
+  //   getUsers();
+  // }, []);
+
   // setting the route through the layout component
   const getRoutes = (route, key) => {
     let Component = route?.component;
@@ -52,10 +63,3 @@ function App() {
 }
 
 export default App;
-{
-  /* <Route path="/" element={<Header />}></Route>
-        <Route path="/dress" element={<DressFeed />}></Route>
-        <Route path="/login" element={<LoginForm />}></Route>
-        <Route path="/signup" element={<SignupForm />}></Route>
-        <Route path="/cart" element={<CartComponent />}></Route> */
-}

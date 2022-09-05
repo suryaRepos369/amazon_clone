@@ -2,16 +2,14 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Drawer from "@mui/material/Drawer";
-import { useDispatch, useSelector } from "react-redux/";
+import { useSelector } from "react-redux/";
 import MenuItem from "../Drawermenu/Drawermenu";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAuth from "./../../hooks/useAuth";
-
+import logo from "./headerlogo.png";
 const Header = (props) => {
   const { auth } = useAuth();
-  const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.dress.count);
-  const dress = useSelector((state) => state.dress.dressDetail);
   const navigate = useNavigate();
   const signinHandler = () => {
     navigate("/login");
@@ -34,8 +32,8 @@ const Header = (props) => {
               navigate("/home");
             }}
             className="ml-3 cursor-pointer  link"
-            src="https://links.papareact.com/f90"
-            alt="Smiley face"
+            src={logo}
+            alt="Home Logo"
             width="82"
             height="82"
           />
