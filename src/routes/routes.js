@@ -1,14 +1,24 @@
-import Home from "../Components/pages/Homepage/HomePage";
-import Dress from "../Components/Dress/ProductFeed";
-import { LoginForm, SignupForm, CartComponent } from "../Components";
-import NotfoundPage from "../Components/pages/404/NotfoundPage";
-import Accounts from "../Components/pages/AccountPage/Account";
-
+import {
+  Home,
+  Dress,
+  LoginForm,
+  SignupForm,
+  Signout,
+  Nfp404,
+  Cart,
+  AccountsPage,
+  ProductDetail,
+  Checkout,
+} from "../Components";
+// import NotfoundPage from "../Components/pages/404/NotfoundPage";
+// import Accounts from "../Components/pages/AccountPage/Account";
+// import Cart from "../Components/cart/Cart";
+// import ProductDetail from "../Components/pages/ProductDetail/ProductDetail";
 export const routes = [
   {
     path: "/account",
     name: "Account",
-    component: Accounts,
+    component: AccountsPage,
     topHeader: true,
     role: "user",
     banner: false,
@@ -32,6 +42,14 @@ export const routes = [
     banner: false,
   },
   {
+    path: "/signout",
+    name: "Signout page",
+    component: Signout,
+    topHeader: false,
+    role: "user",
+    banner: false,
+  },
+  {
     path: "/signup",
     name: "signup",
     component: SignupForm,
@@ -42,25 +60,41 @@ export const routes = [
   {
     path: "/cart",
     name: "cart",
-    component: CartComponent,
+    component: Cart,
     topHeader: true,
     banner: false,
-    role: "user",
+    role: "guest",
   },
   {
     path: "*",
     name: "notfound",
-    component: NotfoundPage,
+    component: Nfp404,
     topHeader: false,
     banner: false,
     role: "guest",
   },
   {
-    path: "/dress",
+    path: "/mens",
     name: "dress",
     component: Dress,
     topHeader: true,
     banner: false,
     role: "guest",
+  },
+  {
+    path: "/product/:productId",
+    name: "productDetail",
+    component: ProductDetail,
+    topHeader: true,
+    banner: false,
+    role: "guest",
+  },
+  {
+    path: "/checkout",
+    name: "Check out",
+    component: Checkout,
+    topHeader: true,
+    banner: false,
+    role: "user",
   },
 ];

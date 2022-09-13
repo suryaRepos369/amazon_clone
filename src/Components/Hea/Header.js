@@ -4,15 +4,21 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Drawer from "@mui/material/Drawer";
 import { useSelector } from "react-redux/";
 import MenuItem from "../Drawermenu/Drawermenu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import useAuth from "./../../hooks/useAuth";
+import useCart from "../../hooks/useCart";
 import logo from "./headerlogo.png";
 const Header = (props) => {
   const { auth } = useAuth();
+  const { cartQuantity } = useCart();
+
   const cartCount = useSelector((state) => state.dress.count);
   const navigate = useNavigate();
   const signinHandler = () => {
     navigate("/login");
+  };
+  const accountHandler = () => {
+    navigate("/account");
   };
 
   <Drawer
@@ -51,8 +57,8 @@ const Header = (props) => {
         <div className="mx-6 flex md:text-sm  text-white items-center text-xs space-x-6 whitespace-nowrap">
           {auth ? (
             <div
-              onClick={signinHandler}
-              className="text-white mx-1 link flex flex-col justify-around "
+              onClick={accountHandler}
+              className="text-white mx-1 link-wo-a flex flex-col justify-around "
             >
               <p className="m-1">Hello {"surya"} </p>
               <p className="font-bold">Account&List</p>
@@ -60,21 +66,21 @@ const Header = (props) => {
           ) : (
             <div
               onClick={signinHandler}
-              className="text-white mx-1 link flex flex-col justify-around "
+              className="text-white mx-1  flex flex-col justify-around "
             >
-              <p className="m-1 mb-0 link">Hello </p>
-              <p className="font-bold link">Signin </p>
+              <p className="m-1 mb-0  link-wo-a">Hello </p>
+              <p className="font-bold link-wo-a">Signin </p>
             </div>
           )}
 
-          <div className="link">
+          <div className="link-wo-a">
             <p className="font-bold mb-0 mt-1">Orders</p>
 
             <p>Returns</p>
           </div>
           <div onClick={() => navigate("/cart")} className="link relative">
-            <span className="absolute top-0 right-0 h-5 w-5 text-center rounded-full text-black font-bold  bg-yellow-300 md:text-center md:right-10 ">
-              {cartCount}
+            <span className="absolute top-0 right-0 h-5 w-5 text-center rounded-full text-black font-bold  bg-orange-600 md:text-center md:right-10 ">
+              {cartQuantity}
             </span>
             <ShoppingCartOutlinedIcon
               sx={{
@@ -89,25 +95,33 @@ const Header = (props) => {
         </div>
       </div>
       {/* bottomNavigation */}
-      <div className=" flex items-center space-x-3 p-0  pl-2 bg-[#232f3e] text-white">
-        <p className="flex font-small link  mt-0">
-          <MenuItem sx={{ ml: 3, my: "1px" }} />
-        </p>
-        <p className="link text-xs sm:text-[16px]">All</p>
-        <p className="link text-xs sm:text-[16px]">Prime Video</p>
-        <p className="link text-xs sm:text-[16px]">Amazon Business</p>
+      <div className=" flex items-center gap-3 bg-[#232f3e] text-white ">
+        <span className="flex">
+          <MenuItem className="link" sx={{ ml: 3, mb: 0 }}></MenuItem>
+          {/* <p className="link text-xs mb-0 mt-0 sm:text-[14px] ">All</p> */}
+        </span>
+        <p className="link text-xs mb-0 sm:text-[14px]">Prime Video</p>
+        <NavLink
+          className="link text-xs mb-0 sm:text-[14px] text-decoration-none  link"
+          to="/mens"
+        >
+          {" "}
+          Dress
+        </NavLink>
+        <p className="link text-xs mb-0 sm:text-[14px]">Amazon Business</p>
 
-        <p className="link text-xs sm:text-[16px]">Today Deals</p>
-        <p className="link text-xs sm:text-[16px] hidden md:inline-flex p-0  hover:outline-dotted">
+        <p className="link text-xs mb-0 sm:text-[14px]">Today Deals</p>
+        <p className="link text-xs mb-0 sm:text-[14px] hidden md:inline-flex p-0 ">
           Mobiles
         </p>
-        <p className="link text-xs sm:text-[16px]  hidden md:inline-flex hover:outline-dotted">
+        <p className="link text-xs mb-0 sm:text-[14px]  hidden md:inline-flex ">
           Computer
         </p>
-        <p className="link text-xs sm:text-[16px] hidden md:inline-flex hover:outline-dotted">
+        <p className="link text-xs mb-0 sm:text-[14px] hidden md:inline-flex ">
           Kitchen Appliances
         </p>
       </div>
+
       {/* Banner */}
       {/* {props.banner && (
         <main className="max relative -w-screen-2xl mx-auto -z-0">

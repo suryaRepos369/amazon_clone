@@ -1,28 +1,39 @@
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
-import { useDispatch } from "react-redux/es/exports";
 import { Box, IconButton, ListItemButton, List, ListItem } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { dressActions } from "../../Redux_Store/Dresses/dressSlice";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
 const Drawermenu = () => {
   //const islogged = useSelector((state) => state.auth.logged);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isDraweropen, setIsDrawerOpen] = React.useState(false);
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
   const menuContents = {
     Trending: ["Best Sellers", "New Releases ", "Movers and Shakers"],
     Department: [
-      "Mobiles and Computers",
-      "TV, Appliances, Electronics",
-      "Mens Fashion ",
-      "Womens Fashion ",
-      "Books",
-      "Science and Technology ",
+      {
+        title: "Mobiles and Computers ",
+        path: "/mobiles",
+      },
+      {
+        title: "TV , Kitchen Appliances ",
+        path: "/electronis",
+      },
+      {
+        title: "Men's Fashion ",
+        path: "/mens",
+      },
+      {
+        title: "Women's Fashion ",
+        path: "/mens",
+      },
+      {
+        title: "Books ",
+        path: "/books",
+      },
     ],
     Settings: [
       // "your account",
@@ -39,7 +50,8 @@ const Drawermenu = () => {
       auth
         ? {
             title: "sign Out",
-            path: "/signout",
+            //path: "/signout",
+            func: logout,
           }
         : {
             title: "sign in",
@@ -54,7 +66,10 @@ const Drawermenu = () => {
         <ListItemButton
           onClick={() => {
             setIsDrawerOpen(false);
-            navigate(data.path);
+            if (data.func) data.func();
+            else {
+              navigate(data.path);
+            }
           }}
           sx={{
             "&:hover": {
@@ -135,24 +150,7 @@ const Drawermenu = () => {
               <span className="font-bold text-2xl">Shop by Category </span>
             </ListItem>
 
-            {menuContents.Department.map((data, id) => (
-              <ListItem key={id} disablePadding>
-                <ListItemButton
-                  onClick={() => {
-                    setIsDrawerOpen(false);
-                    dispatch(dressActions.showDressComp());
-                  }}
-                  sx={{
-                    "&:hover": {
-                      color: "black",
-                      backgroundColor: "#b9bcbf",
-                    },
-                  }}
-                >
-                  {data}
-                </ListItemButton>
-              </ListItem>
-            ))}
+            {menuContents.Department.map((data, id) => getPaths(data, id))}
           </List>
           <List disablePadding>
             <ListItem>

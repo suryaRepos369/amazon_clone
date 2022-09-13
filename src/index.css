@@ -4,11 +4,15 @@
 
 @layer components {
   .link {
-    @apply cursor-pointer  hover:text-yellow-400;
+    @apply cursor-pointer  hover:text-yellow-400 hover:p-1 hover:scale-110 transition ease-in-out hover:border hover:border-white;
+  }
+  .link-wo-a {
+    @apply cursor-pointer  hover:text-yellow-400  transition ease-in-out;
   }
   .amazonbutton {
-    @apply p-4 m-2 rounded-md text-xs  md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400
-     focus:outline-none focus:ring-2 focus:ring-yellow-500 active:to-yellow-500;
+    @apply p-1 m-1 rounded-2xl text-xs  md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400
+     focus:outline-none focus:ring-2 focus:ring-yellow-500 active:to-yellow-500 
+     hover:bg-yellow-500;
   }
 }
 

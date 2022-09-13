@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import DressReducer from "./Dresses/dressSlice";
-import homeSlice from "./Home/homeSlice";
 import authSlice from "./Auth/AuthSlice";
+import cartSlice from "./Cart/CartSlice";
 const rootReducer = combineReducers({
   dress: DressReducer,
-  home: homeSlice,
   auth: authSlice,
+  cart: cartSlice,
 });
 
 export default rootReducer;

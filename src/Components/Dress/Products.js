@@ -1,21 +1,28 @@
-import { autocompleteClasses, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { shadows } from "@mui/system";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Currency from "react-currency-formatter";
 import { Link } from "react-router-dom";
 import React from "react";
-import { dressActions } from "../../Redux_Store/Dresses/dressSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "./../../Redux_Store/Cart/CartSlice";
+import { useNavigate } from "react-router-dom";
+
 const MIN_RATING = 1;
 const MAX_RATING = 5;
 
 const Products = ({ id, title, price, description, category, image }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [rating, setRating] = React.useState(
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
   );
-  const addCartHandler = (title) => {
-    dispatch(dressActions.addDress(title));
+  const addCartHandler = (id, price, title, img, description) => {
+    //console.log("id, price, title, img:", id, price, title, img);
+
+    dispatch(cartActions.addItemToCart({ id, price, title, img, description }));
+    //console.log("added");
   };
 
   return (
@@ -42,14 +49,15 @@ const Products = ({ id, title, price, description, category, image }) => {
       <p className="p-0 absolute top-0 right-0  text-xs italic text-gray-400">
         {category}
       </p>
-      <div className="rounded-md  bg-gray-100 flex  justify-center hover:cursor-pointer">
+      <div className="rounded-md  bg-white flex  justify-center hover:cursor-pointer">
         <img
-          className="hover:scale-110 transition duration-600"
+          className="hover:scale-110 transition ease-in-out duration-600"
           onClick={() => {
-            addCartHandler(title);
+            // addCartHandler(id, price, title, image, description);
+            navigate(`/product/${id}`);
           }}
           style={{
-            backgroundColor: "inherit",
+            backgroundColor: "white",
             marginTop: "30px",
             borderRadius: "10px",
             maxWidth: { xs: 600, md: 350 },
@@ -89,7 +97,7 @@ const Products = ({ id, title, price, description, category, image }) => {
       <button
         className="amazonbutton "
         onClick={() => {
-          addCartHandler(title);
+          addCartHandler(id, price, title, image, description);
         }}
       >
         Add to cart
