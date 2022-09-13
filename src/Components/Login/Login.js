@@ -41,6 +41,42 @@ const FormComponent = () => {
           <div className="col-md-4 m-auto col-sm-6 col-xs-10 bg-white justify-center border border-2 rounded-lg border-black">
             <div className="p-3">
               <img className="w-40 h-20 m-auto" src={amazonLogo} alt="" />
+              {loading ||
+                Error ||
+                (err && (
+              <div className="h-10 w-30 bg-white flex justify-center ">
+                {loading ? (
+                  <div className="h-10 w-30 bg-white flex flex-grow justify-center ">
+                    <CircularProgress
+                      sx={{ color: "yellow", size: "small" }}
+                    ></CircularProgress>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {error && err && (
+                  <div
+                    id="error"
+                    className="bg-white justify-evenly border-2 border-red-500 p-1 m-0 flex flex-grow text-red-600"
+                  >
+                      <span className="justify-left text-red-600 my-auto ml-0">
+                        <ErrorOutlineIcon />
+                      </span>
+
+                      <div className="flex flex-col p-0">
+                        <p className="lg:text-sm lg:font-semibold text-xs my-0 text-red-500">
+                          There was an Error
+                        </p>
+                        <p className=" text-center my-0  text-xs ">{error}</p>
+                      </div>
+
+                      {/* {setTimeout(() => {
+                          var item = document.getElementById("error");
+                          item.style.display = "none";
+                    }, 2000)}
+                  </div>
+                )}
+              </div>
               <h3 className="lead-text ml-2">Sign In</h3>
               <Formik
                 className="flex justify-center"
