@@ -21,8 +21,7 @@ const Layout = (props) => {
               borderColor="#F4442E"
               barColor="#51E5FF"
             />
-          }
-        >
+          }>
           <Banner />
         </Suspense>
       )}
@@ -44,8 +43,7 @@ const Layout = (props) => {
               middleCircleColor="orange"
             />
           </div>
-        }
-      >
+        }>
         {props.children}
       </Suspense>
     </>

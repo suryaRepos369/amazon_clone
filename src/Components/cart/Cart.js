@@ -6,13 +6,16 @@ import { useDispatch } from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
-  const { cartItems, cartQuantity, cartTotal } = useCart();
+  const { cartItems, cartQuantity, cartTotal, deleteItem, bulkAdd } = useCart();
+  console.log("cartItems:", cartItems);
+
   const navigate = useNavigate();
   const dispatch = useDispatch;
   const [select, setSelect] = React.useState();
 
-  const handleSelectChange = (id, qty) => {
+  const handleSelectChange = (id,price,image,description , qty) => {
     console.log("selected value", id, qty);
+    bulkAdd({ id, price ,img:image,qty });
   };
 
   return (
@@ -24,12 +27,8 @@ const Cart = () => {
           <div className="row flex justify-center flex-grow m-1 ">
             <div className="col-9 mt-3 bg-white  ">
               <div className="flex justify-between">
-                <h3 className=" p-2 m-1 fw-semi-bold text-align-start ">
-                  Shopping Cart
-                </h3>
-                <span className="  p-2 mt-3 mr-3 text-muted font-semi-bold ">
-                  Price
-                </span>
+                <h3 className=" p-2 m-1 fw-semi-bold text-align-start ">Shopping Cart</h3>
+                <span className="  p-2 mt-3 mr-3 text-muted font-semi-bold ">Price</span>
               </div>
               <Divider sx={{ bgcolor: "secondary.light" }} />
 
@@ -44,9 +43,7 @@ const Cart = () => {
                           alt="Loading.."
                         />
                         <div className="flex flex-col flex-grow">
-                          <span className="text m-1  font-medium text-lg ">
-                            {data.name}
-                          </span>
+                          <span className="text m-1  font-medium text-lg ">{data.name}</span>
                           <div className="mt-5 flex jus">
                             <span className=" ">
                               <select
@@ -55,9 +52,8 @@ const Cart = () => {
                                 aria-label="Default select example"
                                 value={data.quantity}
                                 onChange={(e) => {
-                                  handleSelectChange(data.id, e.target.value);
-                                }}
-                              >
+                                  handleSelectChange(data.id,data.price,data.image,data.description, e.target.value);
+                                }}>
                                 <option value="0">0(Delete)</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -74,7 +70,11 @@ const Cart = () => {
 
                             <span>
                               {" "}
-                              <button className="bg-inherit text-red-600 p-1 m-1 rounded-lg text-xs  hover:underline">
+                              <button
+                                onClick={() => {
+                                  deleteItem({ id: data.id });
+                                }}
+                                className="bg-inherit text-red-600 p-1 m-1 rounded-lg text-xs  hover:underline">
                                 Delete
                               </button>
                             </span>
@@ -90,9 +90,7 @@ const Cart = () => {
 
                             <span>
                               {" "}
-                              <button className=" text-amazon_blue p-1 m-1 text-xs  hover:underline">
-                                Save for later
-                              </button>
+                              <button className=" text-amazon_blue p-1 m-1 text-xs  hover:underline">Save for later</button>
                             </span>
 
                             <Divider
@@ -107,7 +105,7 @@ const Cart = () => {
                           </div>
                         </div>
                         <div className="lead m-1">
-                          <h5>₹{parseFloat(data.price).toFixed(2)}</h5>
+                          <h5>₹{parseFloat(data.totalPrice).toFixed(2)}</h5>
                         </div>
                       </div>
 
@@ -122,10 +120,7 @@ const Cart = () => {
                     <Divider />
                     <p className="font-normal">
                       Subtotal {cartQuantity ? `(${cartQuantity}) :` : null}
-                      <span className="font-bold">
-                        {" "}
-                        ₹{parseFloat(cartTotal).toFixed(2)}
-                      </span>
+                      <span className="font-bold"> ₹{parseFloat(cartTotal).toFixed(2)}</span>
                     </p>
                   </div>
                 )}
@@ -135,11 +130,9 @@ const Cart = () => {
               <div>
                 <p className="text-muted text-sm py-3">
                   {" "}
-                  The price and availability of items at Amazon.in are subject
-                  to change. The shopping cart is a temporary place to store a
-                  list of your items and reflects each item's most recent price.
-                  Do you have a promotional code? We'll ask you to enter your
-                  claim code when it's time to pay.
+                  The price and availability of items at Amazon.in are subject to change. The shopping cart is a temporary place to store a list of
+                  your items and reflects each item's most recent price. Do you have a promotional code? We'll ask you to enter your claim code when
+                  it's time to pay.
                 </p>
               </div>
             </div>
@@ -149,25 +142,19 @@ const Cart = () => {
                   <span>
                     <CheckCircleIcon sx={{ color: "green" }} />
                   </span>
-                  <p className="text-xs text-green-600 mx-1">
-                    Your first order qualifies for FREE Delivery. Select this
-                    option at checkout. Details
-                  </p>
+                  <p className="text-xs text-green-600 mx-1">Your first order qualifies for FREE Delivery. Select this option at checkout. Details</p>
                   <div></div>
                 </div>
                 <div className="flex flex-col">
                   <p>
                     Subtotal {`(${cartQuantity} item):  `}
-                    <span className="font-bold">{`₹ ${parseFloat(
-                      cartTotal
-                    ).toFixed(2)}`}</span>
+                    <span className="font-bold">{`₹ ${parseFloat(cartTotal).toFixed(2)}`}</span>
                   </p>
                   <button
                     onClick={() => {
                       navigate("/checkout");
                     }}
-                    className="bg-yellow-400 m-1 p-1 rounded-lg"
-                  >
+                    className="bg-yellow-400 m-1 p-1 rounded-lg">
                     Proceed to Checkout
                   </button>
                 </div>
@@ -180,9 +167,7 @@ const Cart = () => {
           <div className="row min-w-full">
             <div className="col-9 bg-white m-2 ">
               <div className="flex flex-row justify-between">
-                <h2 className="p-4 m-2 mt-3 font-normal">
-                  Your Amazon cart is empty.{" "}
-                </h2>
+                <h2 className="p-4 m-2 mt-3 font-normal">Your Amazon cart is empty. </h2>
                 <p className=" text-muted p-4 m-3 mt-4">Price</p>
               </div>
               <div className="m-1 p-2 text-right  text-xl">
@@ -190,10 +175,7 @@ const Cart = () => {
                 <Divider sx={{ bgcolor: "secondary.light" }} />
                 <p className="font-normal p-2 m-3">
                   Subtotal {cartQuantity ? `(${cartQuantity}) :` : `(0 items):`}
-                  <span className="font-bold">
-                    {" "}
-                    ₹{parseFloat(cartTotal).toFixed(2)}
-                  </span>
+                  <span className="font-bold"> ₹{parseFloat(cartTotal).toFixed(2)}</span>
                 </p>
                 <Divider sx={{ bgcolor: "secondary.light" }} />
               </div>
@@ -206,8 +188,7 @@ const Cart = () => {
                 className="bg-yellow-400 p-1 rounded-md cursor-pointer"
                 onClick={() => {
                   navigate("/home");
-                }}
-              >
+                }}>
                 Shop items
               </p>
             </div>

@@ -8,11 +8,17 @@ import WarningAmberSharpIcon from "@mui/icons-material/WarningAmberSharp";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate, useLocation } from "react-router-dom";
 const FromC = () => {
-  const [ErrPas, setErrPas] = React.useState(true);
-
   const location = useLocation();
   const navigate = useNavigate();
   const { auth, login, loading, error, loginPage } = useAuth();
+  console.log(
+    "###############################################################"
+  );
+  console.log("loginPage:", loginPage);
+  console.log("error:", error);
+  console.log("loading:", loading);
+  console.log("auth:", auth);
+
   const validationSchema = yup.object({
     email: yup.string().email().required("Required"),
     password: yup.string().required("Required").min(6).max(15),
@@ -27,8 +33,6 @@ const FromC = () => {
     passwordConfirm: "",
   };
 
-  // const [loading, setLoading] = React.useState(false);
-
   async function submitFunc(values) {
     console.log("form values  :", values);
     let user = false;
@@ -38,6 +42,7 @@ const FromC = () => {
   var errDisplay = false;
   if (loading || error) errDisplay = true;
   else errDisplay = false;
+  console.log("errDisplay:", errDisplay);
 
   React.useEffect(() => {
     if (auth) {
@@ -61,9 +66,7 @@ const FromC = () => {
               }}
             ></CircularProgress>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
         {props.error && (
           <div // style={{ border: "1px solid red" }}
             id="error"

@@ -1,15 +1,4 @@
-import {
-  Home,
-  Dress,
-  LoginForm,
-  SignupForm,
-  Signout,
-  Nfp404,
-  Cart,
-  AccountsPage,
-  ProductDetail,
-  Checkout,
-} from "../Components";
+import { Home, Dress, LoginForm, SignupForm, Signout, Nfp404, Cart, AccountsPage, ProductDetail, Checkout } from "../Components";
 // import NotfoundPage from "../Components/pages/404/NotfoundPage";
 // import Accounts from "../Components/pages/AccountPage/Account";
 // import Cart from "../Components/cart/Cart";
@@ -20,7 +9,7 @@ export const routes = [
     name: "Account",
     component: AccountsPage,
     topHeader: true,
-    role: "user",
+    role: "guest",
     banner: false,
   },
 
@@ -46,7 +35,7 @@ export const routes = [
     name: "Signout page",
     component: Signout,
     topHeader: false,
-    role: "user",
+    role: "guest",
     banner: false,
   },
   {

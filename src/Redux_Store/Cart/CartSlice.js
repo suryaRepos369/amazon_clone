@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
   name: "Cart",
@@ -8,8 +8,20 @@ const cartSlice = createSlice({
     items: [],
   },
   reducers: {
-    
-    
+    bulkAdd(state, action) {
+      const { id, qty } = action.payload;
+    },
+    deleteItem(state, action) {
+      console.log("state.items:", current(state.items));
+
+      const newItem = action.payload;
+      const existingItem = state.items.find((item) => item.id === newItem.id);
+      state.items = state.items.filter((item) => item.id !== newItem.id);
+
+      console.log("existingItem:", current(existingItem));
+      state.cartTotal = state.cartTotal - existingItem.totalPrice;
+      state.totalQuantity = state.totalQuantity - existingItem.quantity;
+    },
     addItemToCart(state, action) {
       const newItem = action.payload;
 
@@ -36,7 +48,6 @@ const cartSlice = createSlice({
       const id = action.payload;
       let qty = action.payload?.qty;
       console.log("qty:", qty);
-      
 
       const existingItem = state.items.find((item) => item.id === id);
       state.cartTotal -= existingItem.price;
