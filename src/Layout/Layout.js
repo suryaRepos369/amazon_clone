@@ -1,9 +1,8 @@
 import React, { Suspense, Spinner } from "react";
 import Header from "./../Components/Hea/Header";
 import Banner from "../Components/pages/Homepage/HomeBanner";
-import Box from "@mui/material/Box";
 import { ThreeCircles, ProgressBar } from "react-loader-spinner";
-import { Divider } from "@mui/material/Divider";
+//import { Divider } from "@mui/material/Divider";
 const Layout = (props) => {
   return (
     <>

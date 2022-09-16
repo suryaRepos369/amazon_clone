@@ -25,8 +25,7 @@ const Header = (props) => {
     variant="temporary"
     anchor="left"
     open={true}
-    onClose={() => alert("closed")}
-  ></Drawer>;
+    onClose={() => alert("closed")}></Drawer>;
 
   return (
     <div className="sticky top-0  z-30">
@@ -45,11 +44,10 @@ const Header = (props) => {
           />
         </div>
         {/* search */}
-        <div className=" hidden mx-2 sm:flex items-center cursor-pointer flex-grow bg-yellow-300 h-10 rounded-sm hover:bg-yellow-600">
+        <div className=" hidden mx-2 sm:flex items-center cursor-pointer flex-grow flex-shrinl bg-yellow-300 h-10 rounded-sm hover:bg-yellow-600">
           <input
             className="p-1 h-full  w-6 rounded-l-md sm:flex-grow flex-shrink focus:outline-none"
-            type="text"
-          ></input>
+            type="text"></input>
           <SearchIcon sx={{ padding: "1px" }} />
         </div>
 
@@ -58,16 +56,14 @@ const Header = (props) => {
           {auth ? (
             <div
               onClick={accountHandler}
-              className="text-white mx-1 link-wo-a flex flex-col justify-around "
-            >
+              className="text-white mx-1 link-wo-a flex flex-col justify-around ">
               <p className="m-1">Hello {"surya"} </p>
               <p className="font-bold">Account&List</p>
             </div>
           ) : (
             <div
               onClick={signinHandler}
-              className="text-white mx-1  flex flex-col justify-around "
-            >
+              className="text-white mx-1  flex flex-col justify-around ">
               <p className="m-1 mb-0  link-wo-a">Hello </p>
               <p className="font-bold link-wo-a">Signin </p>
             </div>
@@ -78,7 +74,9 @@ const Header = (props) => {
 
             <p>Returns</p>
           </div>
-          <div onClick={() => navigate("/cart")} className="link relative">
+          <div
+            onClick={() => navigate("/cart")}
+            className="link relative">
             <span className="absolute top-0 right-0 h-5 w-5 text-center rounded-full text-black font-bold  bg-orange-600 md:text-center md:right-10 ">
               {cartQuantity}
             </span>
@@ -97,29 +95,24 @@ const Header = (props) => {
       {/* bottomNavigation */}
       <div className=" flex items-center gap-3 bg-[#232f3e] text-white ">
         <span className="flex">
-          <MenuItem className="link" sx={{ ml: 3, mb: 0 }}></MenuItem>
+          <MenuItem
+            className="link"
+            sx={{ ml: 3, mb: 0 }}></MenuItem>
           {/* <p className="link text-xs mb-0 mt-0 sm:text-[14px] ">All</p> */}
         </span>
         <p className="link text-xs mb-0 sm:text-[14px]">Prime Video</p>
         <NavLink
           className="link text-xs mb-0 sm:text-[14px] text-decoration-none  link"
-          to="/mens"
-        >
+          to="/mens">
           {" "}
           Dress
         </NavLink>
         <p className="link text-xs mb-0 sm:text-[14px]">Amazon Business</p>
 
         <p className="link text-xs mb-0 sm:text-[14px]">Today Deals</p>
-        <p className="link text-xs mb-0 sm:text-[14px] hidden md:inline-flex p-0 ">
-          Mobiles
-        </p>
-        <p className="link text-xs mb-0 sm:text-[14px]  hidden md:inline-flex ">
-          Computer
-        </p>
-        <p className="link text-xs mb-0 sm:text-[14px] hidden md:inline-flex ">
-          Kitchen Appliances
-        </p>
+        <p className="link text-xs mb-0 sm:text-[14px] hidden md:inline-flex p-0 ">Mobiles</p>
+        <p className="link text-xs mb-0 sm:text-[14px]  hidden md:inline-flex ">Computer</p>
+        <p className="link text-xs mb-0 sm:text-[14px] hidden md:inline-flex ">Kitchen Appliances</p>
       </div>
 
       {/* Banner */}

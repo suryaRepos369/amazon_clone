@@ -1,27 +1,28 @@
 import { AxiosClient } from "../axios/axiosClient";
 
 export const getApi = async (url) => {
-  let response;
   await AxiosClient.get(url)
     .then((res) => {
-      response = res;
+      return res;
     })
     .catch((err) => {
-      response = err;
+      return err;
     });
 
-  return response;
+  //return response;
 };
 
 export const postApi = async (url, data) => {
-  let response;
+  // let response;
   await AxiosClient.post(url, data)
     .then((res) => {
-      response = res;
+      // response = res;
+      return res;
     })
     .catch((err) => {
-      response = err;
+      // response = err;
+      return err;
     });
 
-  return response;
+  // return response;
 };

@@ -24,13 +24,8 @@ const useAuth = () => {
   };
 
   const logout = () => {
-    //dispatch(authActions.logout());
-    dispatch(logoutServer());
+    return dispatch(logoutServer());
   };
-
-  function logoutServerFunc() {
-    dispatch(logoutServer());
-  }
 
   return {
     auth,
@@ -42,7 +37,6 @@ const useAuth = () => {
     loginPage,
     logoutLoading,
     logoutError,
-    logoutServerFunc,
     logoutMessage,
   };
 };
