@@ -4,7 +4,7 @@ import axios from "axios";
 import { AxiosClient } from "./../../http/axios/axiosClient";
 import { isJwtExpired } from "jwt-check-expiration";
 import { getApi } from "../../http/axios/axiosClient";
-import { toast } from "react-toastify";
+
 var v = false;
 
 if (localStorage.hasOwnProperty("rrtfaca")) {
@@ -39,13 +39,10 @@ export const fetchUserData = createAsyncThunk(
         email,
         password,
       });
-      toast.success("Logged out successfully");
       console.log("response:", response);
 
       return fulfillWithValue(response, rememberLogin);
     } catch (error) {
-      toast.success("Error logging out ");
-
       return rejectWithValue(error);
     }
   }
@@ -115,6 +112,15 @@ export const authActions = authSlice.actions;
 export default authSlice.reducer;
 
 export const logoutServer = () => async (dispatch) => {
+  // dispatch(authActions.check());
+  dispatch(
+    authActions.logout({
+      islogged: true,
+      error: null,
+      loading: true,
+      message: null,
+    })
+  );
   try {
     let url = "/users/logout";
     let token = localStorage.getItem("rrtfaca");
