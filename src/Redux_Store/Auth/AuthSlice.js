@@ -1,19 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getApi, postApi } from "./../../http/apiServices/Services";
+//import { getApi, postApi } from "./../../http/apiServices/Services";
+import { AxiosClient } from "./../../http/axios/axiosClient";
+import { isJwtExpired } from "jwt-check-expiration";
+import { getApi } from "../../http/axios/axiosClient";
+import { toast } from "react-toastify";
+var v = false;
 
-//if (typeof token == "undefined");
-//localStorage.clear();
-//typeof localStorage.getItem("rrtfaca") !== "undefined",
-// var v = false;
+if (localStorage.hasOwnProperty("rrtfaca")) {
+  let token = localStorage.getItem("rrtfaca");
+  if (token !== "undefined") {
+    v = !isJwtExpired(token);
+    console.log("isJwtExpired(token):", isJwtExpired(token));
+  }
+}
 
-// if (localStorage.hasOwnProperty("rrtfaca")) {
-//   if (localStorage.getItem("rrtfaca") !== "undefined") v = true;
-// }
-
+console.log("token :", localStorage.getItem("rrtfaca"));
 const initialState = {
   token: localStorage.getItem("rrtfaca"),
-  islogged: false,
+  islogged: v,
   loading: false,
   userData: [],
   error: null,
@@ -22,27 +27,36 @@ const initialState = {
   logoutMessage: false,
 };
 
-export const fetchUserData = createAsyncThunk("post/fetchUserData", async ({ email, password, user }, { rejectWithValue, fulfillWithValue }) => {
-  console.log("email, password, user:", email, password, user);
-  let url = user ? "http://localhost:3030/users/login" : "http://localhost:3030/users/signup";
+export const fetchUserData = createAsyncThunk(
+  "post/fetchUserData",
+  async ({ email, password, rememberLogin, user }, { rejectWithValue, fulfillWithValue }) => {
+    console.log("email, password, user,RememberLogin:", email, password, user, rememberLogin);
+    localStorage.setItem("keepLogin", rememberLogin);
+    let url = user ? "/users/login" : "/users/signup";
 
-  try {
-    const response = await axios.post(url, {
-      email,
-      password,
-    });
-    return fulfillWithValue(response);
-  } catch (error) {
-    return rejectWithValue(error);
+    try {
+      const response = await AxiosClient.post(url, {
+        email,
+        password,
+      });
+      toast.success("Logged out successfully");
+      console.log("response:", response);
+
+      return fulfillWithValue(response, rememberLogin);
+    } catch (error) {
+      toast.success("Error logging out ");
+
+      return rejectWithValue(error);
+    }
   }
-});
+);
 
 const authSlice = createSlice({
   name: "Auth",
   initialState,
   reducers: {
-    login(state) {
-      state.islogged = true;
+    keepLogin(state, action) {
+      state.keepLogin = action.payload.rememberLogin;
     },
     logout(state, action) {
       const { islogged, error, loading, message } = action.payload;
@@ -68,7 +82,7 @@ const authSlice = createSlice({
       state.error = null;
     });
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
-      // console.log("promise fulfilled", action.payload.status);
+      console.log("promise fulfilled", action.payload);
       state.loading = false;
       if (action.payload.status === 404) {
         state.islogged = false;
@@ -101,26 +115,29 @@ export const authActions = authSlice.actions;
 export default authSlice.reducer;
 
 export const logoutServer = () => async (dispatch) => {
-  dispatch(authActions.check());
-  dispatch(
-    authActions.logout({
-      islogged: true,
-      error: null,
-      loading: true,
-      message: null,
-    })
-  );
   try {
-    let url = "http://localhost:3030/users/logout";
+    let url = "/users/logout";
     let token = localStorage.getItem("rrtfaca");
-    await axios.get(url, {
+    console.log("token from logou thunk :", token);
+
+    await AxiosClient.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    if (!localStorage.getItem("keepLogin")) {
+      console.log("Deleting local storage");
+      localStorage.clear();
+    }
     dispatch(authActions.logout({ islogged: false, error: null, loading: false, message: "Logged out successfully" }));
   } catch (error) {
     console.log("error:", error);
-    dispatch(authActions.logout({ islogged: true, error: error.response.data, loading: false, message: null }));
+
+    console.log("error:", error.response?.data);
+
+    dispatch(authActions.logout({ islogged: true, error: error.response?.data, loading: false, message: null }));
   }
+};
+export const authData = (state) => {
+  return { token: state.token, auth: state.islogged };
 };
