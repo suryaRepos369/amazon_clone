@@ -1,8 +1,6 @@
 import React from "react";
 import useCart from "../../hooks/useCart";
 import Divider from "@mui/material/Divider";
-import { cartActions } from "./../../Redux_Store/Cart/CartSlice";
-import { useDispatch } from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
@@ -10,12 +8,12 @@ const Cart = () => {
   console.log("cartItems:", cartItems);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch;
-  const [select, setSelect] = React.useState();
+  // const dispatch = useDispatch;
+  // const [select, setSelect] = React.useState();
 
-  const handleSelectChange = (id,price,image,description , qty) => {
+  const handleSelectChange = (id, price, image, description, qty) => {
     console.log("selected value", id, qty);
-    bulkAdd({ id, price ,img:image,qty });
+    bulkAdd({ id, price, img: image, qty });
   };
 
   return (
@@ -38,21 +36,26 @@ const Cart = () => {
                     <React.Fragment key={id}>
                       <div className="m-1 p-2 flex justify-between flex-grow flex-shrink bg-inherit rounded-lg ">
                         <img
-                          className="w-32 h-36 m-1.5 mr-8"
+                          className="hidden sm:flex w-16 h-20  my-auto mx-2 md:flex md:w-20 md:h-24 md:my-0 md:mx-1 "
                           src={data.image}
                           alt="Loading.."
                         />
-                        <div className="flex flex-col flex-grow">
-                          <span className="text m-1  font-medium text-lg ">{data.name}</span>
-                          <div className="mt-5 flex jus">
+                        <div className="flex flex-col flex-grow sm:text-sm">
+                          <span className="text m-1 font-small sm:text-sm  md:font-medium text-lg ">{data.name}</span>
+                          <div className="mt-3 flex jus">
                             <span className=" ">
                               <select
-                                className=" border border-1 border-black rounded-lg bg-gray-200 py-1 text-xs m-1 focus:border-1 active:outline-dashed
+                                className=" 
+                                sm:mt-1
+                                border border-1 border-black
+                                 rounded-lg bg-gray-200 py-1
+                                  text-xs m-1
+                                   focus:border-1 active:outline-dashed
                                text-center font-bold "
                                 aria-label="Default select example"
                                 value={data.quantity}
                                 onChange={(e) => {
-                                  handleSelectChange(data.id,data.price,data.image,data.description, e.target.value);
+                                  handleSelectChange(data.id, data.price, data.image, data.description, e.target.value);
                                 }}>
                                 <option value="0">0(Delete)</option>
                                 <option value="1">1</option>
