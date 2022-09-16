@@ -1,15 +1,15 @@
-import { createSlice, createAsyncThunk, unwrapResult } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { getApi, postApi } from "./../../http/apiServices/Services";
 
 //if (typeof token == "undefined");
 //localStorage.clear();
 //typeof localStorage.getItem("rrtfaca") !== "undefined",
-var v = false;
+// var v = false;
 
-if (localStorage.hasOwnProperty("rrtfaca")) {
-  if (localStorage.getItem("rrtfaca") !== "undefined") v = true;
-}
+// if (localStorage.hasOwnProperty("rrtfaca")) {
+//   if (localStorage.getItem("rrtfaca") !== "undefined") v = true;
+// }
 
 const initialState = {
   token: localStorage.getItem("rrtfaca"),
@@ -113,7 +113,7 @@ export const logoutServer = () => async (dispatch) => {
   try {
     let url = "http://localhost:3030/users/logout";
     let token = localStorage.getItem("rrtfaca");
-    let response = await axios.get(url, {
+    await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
