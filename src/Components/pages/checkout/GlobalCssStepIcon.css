@@ -1,0 +1,11 @@
+.MuiSTepICon-root {
+  color: #20b2aa;
+}
+
+.MuiStepICon-root:hover {
+  color: red;
+}
+
+.MuiStepIcon-root .MuiSlider-thumb {
+  border-radius: 1px;
+}

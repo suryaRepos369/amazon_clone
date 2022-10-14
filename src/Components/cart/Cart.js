@@ -2,6 +2,7 @@ import React from "react";
 import useCart from "../../hooks/useCart";
 import Divider from "@mui/material/Divider";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const { cartItems, cartQuantity, cartTotal, deleteItem, bulkAdd } = useCart();
@@ -22,7 +23,7 @@ const Cart = () => {
         {cartQuantity ? (
           //!when cart has any items
 
-    <div className="row flex justify-center flex-grow m-1 ">
+          <div className="row flex justify-center flex-grow m-1 ">
             <div className="col-9 mt-3 bg-white  ">
               <div className="flex justify-between">
                 <h3 className=" p-2 m-1 fw-semi-bold text-align-start ">Shopping Cart</h3>

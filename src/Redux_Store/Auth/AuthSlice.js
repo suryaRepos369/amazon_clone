@@ -2,8 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 //import { getApi, postApi } from "./../../http/apiServices/Services";
 import { AxiosClient } from "./../../http/axios/axiosClient";
+
+import { loginClient } from "../../http/axios/axiosClient";
 import { isJwtExpired } from "jwt-check-expiration";
-import { getApi } from "../../http/axios/axiosClient";
 
 var v = false;
 
@@ -15,7 +16,7 @@ if (localStorage.hasOwnProperty("rrtfaca")) {
   }
 }
 
-console.log("token :", localStorage.getItem("rrtfaca"));
+//console.log("token :", localStorage.getItem("rrtfaca"));
 const initialState = {
   token: localStorage.getItem("rrtfaca"),
   islogged: v,
@@ -30,12 +31,12 @@ const initialState = {
 export const fetchUserData = createAsyncThunk(
   "post/fetchUserData",
   async ({ email, password, rememberLogin, user }, { rejectWithValue, fulfillWithValue }) => {
-    console.log("email, password, user,RememberLogin:", email, password, user, rememberLogin);
+    // console.log("email, password, user,RememberLogin:", email, password, user, rememberLogin);
     localStorage.setItem("keepLogin", rememberLogin);
     let url = user ? "/users/login" : "/users/signup";
 
     try {
-      const response = await AxiosClient.post(url, {
+      const response = await loginClient.post(url, {
         email,
         password,
       });
@@ -124,7 +125,6 @@ export const logoutServer = () => async (dispatch) => {
   try {
     let url = "/users/logout";
     let token = localStorage.getItem("rrtfaca");
-    console.log("token from logou thunk :", token);
 
     await AxiosClient.get(url, {
       headers: {
@@ -135,13 +135,19 @@ export const logoutServer = () => async (dispatch) => {
       console.log("Deleting local storage");
       localStorage.clear();
     }
+
     dispatch(authActions.logout({ islogged: false, error: null, loading: false, message: "Logged out successfully" }));
+    return 1;
   } catch (error) {
-    console.log("error:", error);
+    console.log("error:", Object.keys(error), Object.values(error));
+    let err = error.response.data;
+    if (error.message === "Network Error") {
+      console.log("network error Please check your connection ");
+      err = error.message;
+    }
 
-    console.log("error:", error.response?.data);
-
-    dispatch(authActions.logout({ islogged: true, error: error.response?.data, loading: false, message: null }));
+    dispatch(authActions.logout({ islogged: true, error: err, loading: false, message: null }));
+    return 0;
   }
 };
 export const authData = (state) => {

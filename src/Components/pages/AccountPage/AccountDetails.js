@@ -37,19 +37,16 @@ const AccountDetails = () => {
   function userDataLoader() {
     if (auth) {
       let url = "/users/me";
-      var t = localStorage.getItem("rrtfaca");
-      AxiosClient.get(url, {
-        headers: {
-          Authorization: `Bearer ${t}`,
-        },
-      })
+      AxiosClient.get(url)
         .then((res) => {
           let a = res.data.email;
           console.log("a:", a);
           setPost(a);
         })
         .catch((err) => {
-          console.log(err);
+          //  console.log(err);
+          let a = err.message;
+          setPost(a);
         });
     }
   }
@@ -58,8 +55,8 @@ const AccountDetails = () => {
       <div className="card w-100 h-100">
         <h3 className="lead text-center bg-yellow-300 p-3">Personal details</h3>
       </div>
-      <div className="card  border-0 ">
-        <div className=" card  m-3 border-0 ">
+      <div className="card  border-0 justify-center flex flex-row ">
+        <div className="col-3 card  m-3 border-0 ">
           <Accordion
             onClick={userDataLoader}
             className="m-0 p-0 border-0">
@@ -74,16 +71,45 @@ const AccountDetails = () => {
               <p className="cart-title text-md m-0 font-medium p-0">User Details</p>
             </AccordionSummary>
             <AccordionDetails className="m-0 p-1 ">
-              <p>
-                {post ? (
-                  post
-                ) : (
-                  <Skeleton
-                    variant="text"
-                    sx={{ fontSize: "1rem" }}
-                  />
-                )}
-              </p>
+              <div className="flex gap-5">
+                <p>Email:</p>
+                <p>
+                  {post ? (
+                    post
+                  ) : (
+                    <Skeleton
+                      variant="text"
+                      sx={{ fontSize: "1rem" }}
+                    />
+                  )}
+                </p>
+              </div>
+              <div className="flex gap-5">
+                <p>Email:</p>
+                <p>
+                  {post ? (
+                    post
+                  ) : (
+                    <Skeleton
+                      variant="text"
+                      sx={{ fontSize: "1rem" }}
+                    />
+                  )}
+                </p>
+              </div>
+              <div className="flex gap-5">
+                <p>Email:</p>
+                <p>
+                  {post ? (
+                    post
+                  ) : (
+                    <Skeleton
+                      variant="text"
+                      sx={{ fontSize: "1rem" }}
+                    />
+                  )}
+                </p>
+              </div>
             </AccordionDetails>
           </Accordion>
         </div>

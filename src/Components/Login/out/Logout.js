@@ -19,24 +19,19 @@ const Logout = () => {
   // });
 
   async function logoutHandler() {
-    console.log("logout clicked");
-    let res = logout();
+    logout();
+    toast.promise(logout(), {
+      pending: "Logging out.......",
+    });
 
-    console.log("res:", res);
-
-    toast.promise(
-      res,
-      {
-        pending: "Logging out...",
-        // success: "Logged out  👌",
-        // error: `Error :${logoutError}`,
-      },
-      { autoClose: 1000 }
-    );
+    if (logoutError) {
+      toast.error("Please check the Connection");
+    }
   }
+
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
       {auth ? (
         <div className="flex justify-between">
           <Avatar
@@ -68,18 +63,20 @@ const Logout = () => {
           </p>
         </div>
       )}
-      {logoutError && (
+      {/* {logoutError && (
         <div className="lead  border-2 border-danger p-0 flex-grow justify-center text-center ">
           <div>There is a problem</div>
 
           <p className="text-red-500 font-semibold"> {logoutError}</p>
         </div>
-      )}
+      )} */}
       {logoutLoading ? (
         <div className="lead  p-0 justify-center text-center flex-grow ">
+          <ToastContainer />
+
           <ProgressBar
             className="mx-auto "
-            height="80"
+            hehyight="80"
             width="480"
             ariaLabel="progress-bar-loading"
             wrapperStyle={{}}

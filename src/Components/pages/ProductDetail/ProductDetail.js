@@ -7,10 +7,35 @@ import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../../Redux_Store/Cart/CartSlice";
 import axios from "axios";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 const fallbackContent = (
   <div>
-    <h1>Loading....</h1>
+    <Stack spacing={1}>
+      {/* For variant="text", adjust the height via font-size */}
+      <Skeleton
+        variant="text"
+        sx={{ fontSize: "1rem" }}
+      />
+
+      {/* For other variants, adjust the size with `width` and `height` */}
+      <Skeleton
+        variant="circular"
+        width={40}
+        height={40}
+      />
+      <Skeleton
+        variant="rectangular"
+        width={210}
+        height={60}
+      />
+      <Skeleton
+        variant="rounded"
+        width={210}
+        height={60}
+      />
+    </Stack>
   </div>
 );
 
@@ -61,21 +86,15 @@ function ProductDetailFunction(props) {
                   .map((_, i) => (
                     <StarIcon
                       className="h-5 flex flex-col text-yellow-500 justify-start color-yellow-400"
-                      key={i}
-                    ></StarIcon>
+                      key={i}></StarIcon>
                   ))}
               </span>
               <p className="mr-2">{props.product.rating.count}</p>
               <span>ratings</span>
             </div>
-            <p className="font-bold m-2 text-xl">
-              ₹{parseFloat(props.product.price).toFixed(2)}
-            </p>
+            <p className="font-bold m-2 text-xl">₹{parseFloat(props.product.price).toFixed(2)}</p>
             <p className="font-normal m-2 text-sm text-decoration-line-through text-muted">
-              <span className="font-semibold mx-1">MRP</span>₹
-              {parseFloat(
-                props.product.price + 3 * props.product.price
-              ).toFixed(2)}
+              <span className="font-semibold mx-1">MRP</span>₹{parseFloat(props.product.price + 3 * props.product.price).toFixed(2)}
             </p>
             <p className="m-2 text-sm text-muted">Inclusive of all the taxes</p>
 
@@ -87,26 +106,18 @@ function ProductDetailFunction(props) {
 
             <p className="m-2">{props.product.description}</p>
             <p className="m-2">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Necessitatibus fugit provident quasi perferendis eligendi quam
-              possimus, deleniti praesentium voluptatibus consequuntur odit
-              ullam tempora ipsum temporibus distinctio sunt voluptatum quo
-              aliquam. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Eius error atque illum magni dolor aspernatur quos tenetur,
-              consequatur rem, commodi est quas doloribus velit? Quod dolores
-              voluptatibus veritatis doloremque alias!
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus fugit provident quasi perferendis eligendi quam possimus,
+              deleniti praesentium voluptatibus consequuntur odit ullam tempora ipsum temporibus distinctio sunt voluptatum quo aliquam. Lorem ipsum
+              dolor, sit amet consectetur adipisicing elit. Eius error atque illum magni dolor aspernatur quos tenetur, consequatur rem, commodi est
+              quas doloribus velit? Quod dolores voluptatibus veritatis doloremque alias!
             </p>
           </div>
         </div>
         <div className="col-2   sticky h-fit  top-28 m-auto mt-2 p-1 bg-white border border-1 border-black p-3">
           <div className="flex flex-col">
-            <p className="font-semibold m-2 text-2xl">
-              ₹{parseFloat(props.product.price).toFixed(2)}
-            </p>
+            <p className="font-semibold m-2 text-2xl">₹{parseFloat(props.product.price).toFixed(2)}</p>
             <p className="lead">Free delivery </p>
-            <p className="text-sm">
-              Sold by {"Appario Retail Private Limited"} and
-            </p>
+            <p className="text-sm">Sold by {"Appario Retail Private Limited"} and</p>
             <p className="text-sm">fulfilled by {"amazon"}</p>
             <p className="text-green-500 font-normal">In stock</p>
 
@@ -122,16 +133,14 @@ function ProductDetailFunction(props) {
                   })
                 );
               }} // className="bg-yellow-400 p-1 m-2 rounded-2xl text-sm"
-              className="amazonbutton"
-            >
+              className="amazonbutton">
               Add to cart
             </button>
             <button
               onClick={() => {
                 props.navigate("/cart");
               }} // className="bg-yellow-400 p-1 m-2 rounded-2xl text-sm"
-              className="amazonbutton"
-            >
+              className=" bg-orange-400 py-1 text-sm rounded-2xl hover:border-2 hover:border-spacing-2  active:bg-gradient-to-r from-orange-300 to-orange-500">
               Buy now
             </button>
           </div>
@@ -143,22 +152,16 @@ function ProductDetailFunction(props) {
           <h3 className="display-5">Product specifications</h3>
         </div>
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          aperiam numquam commodi in cupiditate reiciendis nulla, obcaecati
-          inventore. Maiores sit tempore aut, dolores blanditiis quis adipisci
-          molestiae illum eveniet iste!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus aperiam numquam commodi in cupiditate reiciendis nulla, obcaecati
+          inventore. Maiores sit tempore aut, dolores blanditiis quis adipisci molestiae illum eveniet iste!
         </div>
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          aperiam numquam commodi in cupiditate reiciendis nulla, obcaecati
-          inventore. Maiores sit tempore aut, dolores blanditiis quis adipisci
-          molestiae illum eveniet iste!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus aperiam numquam commodi in cupiditate reiciendis nulla, obcaecati
+          inventore. Maiores sit tempore aut, dolores blanditiis quis adipisci molestiae illum eveniet iste!
         </div>
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-          aperiam numquam commodi in cupiditate reiciendis nulla, obcaecati
-          inventore. Maiores sit tempore aut, dolores blanditiis quis adipisci
-          molestiae illum eveniet iste!
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus aperiam numquam commodi in cupiditate reiciendis nulla, obcaecati
+          inventore. Maiores sit tempore aut, dolores blanditiis quis adipisci molestiae illum eveniet iste!
         </div>
       </div>
     </div>
@@ -206,8 +209,7 @@ const ProductDetail = () => {
             naviagatea={navigate}
             product={product}
             img={img}
-            setImg={setImg}
-          ></ProductDetailFunction>
+            setImg={setImg}></ProductDetailFunction>
         ) : (
           <div>
             <h1>{err}</h1>

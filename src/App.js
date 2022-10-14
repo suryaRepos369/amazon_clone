@@ -4,8 +4,14 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { routes } from "./routes";
 import Layout from "./Layout/Layout";
 import RequireAuth from "./Components/RequireAuth";
-import { ToastContainer, toast } from "react-toastify";
+require("./http/axios/axiosInterceptor.js");
 
+// import { AxiosClient } from "./http/axios/axiosClient";
+// AxiosClient.interceptors.request.use((request) => {
+//   console.log("request:", request);
+//   console.log("from interceptor");
+//   return request;
+// });
 function App() {
   // setting the route through the layout component
   const getRoutes = (route, key) => {
