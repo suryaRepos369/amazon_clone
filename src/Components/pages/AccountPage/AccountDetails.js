@@ -1,40 +1,93 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 //import { ProgressBar } from "react-loader-spinner";
-//import useAuth from './../../../hooks/useAuth';
+import useAuth from "./../../../hooks/useAuth";
+import { AxiosClient } from "./../../../http/axios/axiosClient";
+import Skeleton from "@mui/material/Skeleton";
+
 const AccountDetails = () => {
+  const [post, setPost] = React.useState("");
+  const { auth } = useAuth();
+  //every component mount and update
+
+  // useEffect(() => {
+  //   if (auth) {
+  //     let url = "/users/me";
+  //     var t = localStorage.getItem("rrtfaca");
+  //     AxiosClient.get(url, {
+  //       headers: {
+  //         Authorization: `Bearer ${t}`,
+  //       },
+  //     })
+  //       .then((res) => {
+  //         let a = res.data.email;
+  //         console.log("a:", a);
+  //         setPost(a);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, []);
+
+  function userDataLoader() {
+    if (auth) {
+      let url = "/users/me";
+      var t = localStorage.getItem("rrtfaca");
+      AxiosClient.get(url, {
+        headers: {
+          Authorization: `Bearer ${t}`,
+        },
+      })
+        .then((res) => {
+          let a = res.data.email;
+          console.log("a:", a);
+          setPost(a);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
   return (
     <>
       <div className="card w-100 h-100">
         <h3 className="lead text-center bg-yellow-300 p-3">Personal details</h3>
       </div>
-      <div className="col card card-col flex-row border-0">
-        <div className="card w-80 m-3 border-0">
-          <Accordion className="m-0 p-0 border-0">
+      <div className="card  border-0 ">
+        <div className=" card  m-3 border-0 ">
+          <Accordion
+            onClick={userDataLoader}
+            className="m-0 p-0 border-0">
             <AccordionSummary
-              className="px-1 m-0"
-              expandIcon={<ExpandMoreIcon />}
+              sx={{
+                margin: 0,
+                padding: "1px",
+              }}
+              expandIcon={<ExpandMoreIcon className="p-0 m-0" />}
               aria-controls="panel1a-content"
               id="panel1a-header">
-              <p className="cart-title text-sm m-0">User Details</p>
+              <p className="cart-title text-md m-0 font-medium p-0">User Details</p>
             </AccordionSummary>
-            <AccordionDetails>
-              <div className="card">
-                <div className="card-body">
-                  <h6 className="cart-title">User Name</h6>
-                  <div className="card-content bg-slate-100">
-                    <p>{"surya@gmail.com"}</p>
-                  </div>
-                </div>
-              </div>
+            <AccordionDetails className="m-0 p-1 ">
+              <p>
+                {post ? (
+                  post
+                ) : (
+                  <Skeleton
+                    variant="text"
+                    sx={{ fontSize: "1rem" }}
+                  />
+                )}
+              </p>
             </AccordionDetails>
           </Accordion>
         </div>
-        <div className="card w-80 m-3  text-sm border-0">
+        <div className="card  m-3  text-sm border-0">
           <Accordion className="m-0 p-0">
             <AccordionSummary
               className="px-1 m-0"
@@ -50,7 +103,7 @@ const AccountDetails = () => {
             </AccordionDetails>
           </Accordion>
         </div>
-        <div className="card w-80 m-3 text-sm border-0">
+        <div className="card  m-3 text-sm border-0">
           <Accordion className="m-0 p-0">
             <AccordionSummary
               className="px-1 m-0"
