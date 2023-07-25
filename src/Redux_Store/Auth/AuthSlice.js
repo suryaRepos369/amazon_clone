@@ -4,6 +4,8 @@ import axios from "axios";
 import { AxiosClient } from "./../../http/axios/axiosClient";
 import { isJwtExpired } from "jwt-check-expiration";
 import { getApi } from "../../http/axios/axiosClient";
+import {auth, provider} from '../../firebaseAuth//firebaseConfig'
+import { signInWithPopup } from 'firebase/auth';
 
 var v = false;
 
@@ -71,6 +73,13 @@ const authSlice = createSlice({
       console.log("logoutError:", state.logoutError);
       console.log("logoutMessage:", state.logoutMessage);
     },
+    setLogin(state, action ){
+      const { islogged, error, loading, message } = action.payload;
+      state.logoutLoading = loading;
+      state.logoutError = error;
+      state.logoutMessage = message;
+      state.islogged = islogged;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserData.pending, (state) => {
@@ -144,6 +153,36 @@ export const logoutServer = () => async (dispatch) => {
     dispatch(authActions.logout({ islogged: true, error: error.response?.data, loading: false, message: null }));
   }
 };
+
+// const signInGoogle = () => {
+//   signInWithPopup(auth, provider)
+//     .then((res) => {
+//       localStorage.setItem('email', res.user.email);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
+export const loginServer = () => async (dispatch) => {
+  // dispatch(authActions.check());
+  dispatch(
+    authActions.setLogin({
+      islogged: true,
+      error: null,
+      loading: true,
+      message: 'logging...',
+    })
+  );
+  try {
+    let a = await signInWithPopup(auth, provider);
+    localStorage.setItem("email",a.user.email)
+    console.log({a})
+    dispatch(authActions.logout({ islogged: true, error: null, loading: false, message: "Logged in  successfully" }));
+  } catch (error) {
+    dispatch(authActions.logout({ islogged: false, error: error.response?.data, loading: false, message: null }));
+  }
+};
+
 export const authData = (state) => {
   return { token: state.token, auth: state.islogged };
 };

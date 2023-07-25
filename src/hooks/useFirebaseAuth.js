@@ -1,29 +1,25 @@
-import { useSelector } from "react-redux";
+import { useState } from 'react';
+import {auth, provider} from '../firebaseAuth/firebaseConfig'
+import { signInWithPopup } from 'firebase/auth';
 import { useDispatch } from "react-redux";
-import { authActions } from "./../Redux_Store/Auth/AuthSlice";
+import { loginServer } from './../Redux_Store/Auth/AuthSlice';
 
-import { auth } from "../firebaseAuth/auth";
-import { React } from "react";
 
-const useFirebaseAuth = (email, password) => {
-  const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth.islogged);
+const useFirebaseAuth = () => {
+  const dispatch = useDispatch()
+  const [userEmail, setUserEmail] = useState(localStorage.getItem('email') || '');
 
-  const [user, setUser] = React.useState();
-
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
+  const signInGoogle = () => {
+   
+        return  dispatch(loginServer());
+       
   }
+  
+ 
 
-  React.useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
+  // Add other authentication-related functions and states here if needed
 
-    return unsubscribe;
-  }, []);
-
-  return { user, signup };
+  return { userEmail, signInGoogle };
 };
 
 export default useFirebaseAuth;

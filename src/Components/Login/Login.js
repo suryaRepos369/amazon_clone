@@ -9,7 +9,8 @@ import warning from "./danger.jpg";
 import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import WarningAmberSharpIcon from "@mui/icons-material/WarningAmberSharp";
-
+import g from './google.png'
+import useFirebaseAuth from "../../hooks/useFirebaseAuth";
 function ErrorDisplay(props) {
   return (
     <div className="h-12 w-30 bg-white flex justify-center  ">
@@ -75,7 +76,8 @@ const FormComponent = () => {
     password: "",
     rememberLogin: false,
   };
-  const { auth, login, loading, error, loginPage } = useAuth();
+  const { auth, login, loading, error, loginPage  } = useAuth();
+  const {signInGoogle}  = useFirebaseAuth();
 
   //const [errDisplay, setErrDisplay] = React.useState(false);
 
@@ -89,6 +91,10 @@ const FormComponent = () => {
   var errDisplay = false;
   if (loading || error) errDisplay = true;
   else errDisplay = false;
+ const loginGoogleHandler =()=>{
+  console.log('loggin with firebase')
+  signInGoogle();
+ }
 
   React.useEffect(() => {
     if (auth) {
@@ -107,10 +113,10 @@ const FormComponent = () => {
           className="container-lg "
           style={{ marginTop: "50px" }}>
           {/* login */}
-          <div className="col-md-4 m-auto col-sm-6 col-xs-10 bg-white justify-center border border-1 rounded-lg border-black">
+          <div className="col-md-4 m-auto col-sm-6 col-xs-10 bg-white justify-center bg-gray-400 rounded-lg border-black">
             <div className="lg-px-3 px-1  lg-pb-3 pt-0">
               <img
-                className="w-fit h-16 p-2 mt-2 m-auto"
+                className="w-32 h-16 p-2 mt-2 m-auto"
                 src={amazonLogo}
                 alt=""
               />
@@ -166,7 +172,7 @@ const FormComponent = () => {
                       type="password"
                       name="password"
                       placeholder="Password"
-                      // validate={emailValid}
+                    // validate={emailValid}
                     ></Field>
 
                     <ErrorMessage name="password">
@@ -193,7 +199,7 @@ const FormComponent = () => {
                       className=" h-5 w-5 m-auto  border border-1 border-black focus:outline-2 focus:outline-yellow-400"
                       type="checkBox"
                       name="rememberLogin"
-                      // validate={emailValid}
+                    // validate={emailValid}
                     ></Field>
 
                     <ErrorMessage name="rememberLogin">
@@ -210,20 +216,30 @@ const FormComponent = () => {
                     </ErrorMessage>
                   </div>
 
-                  <button
-                    disabled={loading || auth}
-                    className="  mt-3 mb-0 p-1 font-semibold bg-yellow-400 rounded-sm
-                
-                     
+                 
+                    <button
+                      disabled={loading || auth}
+                      className="  mt-3 mb-0 p-1 font-semibold bg-yellow-400 rounded-md
                      disabled:transform-none disabled:transition-none 
                      disabled:cursor-not-allowed
                     disabled:text-yellow-500
                       hover:bg-gradient-to-t from-yellow-500 to-yellow-400
                       hover:shadow-lg
                      "
-                    type="submit">
-                    Login
-                  </button>
+                      type="submit">
+                      Login
+                    </button>
+                    <div className="text-center">Or</div>
+                    <div className="flex flex-row text-center my-2 p-1 bg-yellow-100 justify-center gap-4">
+                    <span>
+                      Sign in with
+                    </span>
+                    <button onClick={loginGoogleHandler} className="w-6 h-4">
+                    <img loading="lazy" src={g} alt=""></img>
+                    </button>
+                    </div>
+                   
+                 
                 </Form>
               </Formik>
             </div>

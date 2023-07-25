@@ -11,7 +11,7 @@ const parseJwt = (token) => {
 
 const AuthVerify = (props) => {
   props.history.listen(() => {
-    const user = localStorage.getItem("rrtfaca"));
+    const user = localStorage.getItem("rrtfaca");
 
     if (user) {
       const decodedJwt = parseJwt(user);

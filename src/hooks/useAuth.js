@@ -5,6 +5,7 @@ import { fetchUserData } from "../Redux_Store/Auth/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { defaultConfig } from "../Components/DefaultConfig/DefaultConfig";
 import { logoutServer } from "../Redux_Store/Auth/AuthSlice";
+import useFirebaseAuth from "./useFirebaseAuth";
 const { loginPage, signoutPage } = defaultConfig;
 const useAuth = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ const useAuth = () => {
     return dispatch(logoutServer());
   };
 
+
+
   return {
     auth,
     login,
@@ -38,6 +41,7 @@ const useAuth = () => {
     logoutLoading,
     logoutError,
     logoutMessage,
+   
   };
 };
 

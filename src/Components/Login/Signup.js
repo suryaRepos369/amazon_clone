@@ -96,7 +96,7 @@ const FromC = () => {
           className="container-lg h-fit mx-2 flex flex-grow-1 flex-shrink-1"
           style={{ marginTop: "20px" }}>
           {/* login */}
-          <div className="col-md-4 h-fit m-auto col-xs-8 col-sm-6  bg-white justify-center border border-1 rounded-lg border-black">
+          <div className="col-md-4 h-fit m-auto col-xs-8 col-sm-6  bg-white justify-center rounded-lg border-black">
             <div className="px-3 pb-2 pt-0 h-fit">
               <img
                 className="w-fit h-16 m-auto p-2"
