@@ -1,11 +1,9 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { authActions } from "./../Redux_Store/Auth/AuthSlice";
 import { fetchUserData } from "../Redux_Store/Auth/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { defaultConfig } from "../Components/DefaultConfig/DefaultConfig";
-import { logoutServer } from "../Redux_Store/Auth/AuthSlice";
-import useFirebaseAuth from "./useFirebaseAuth";
+import { logoutGoogleServer } from "../Redux_Store/Auth/AuthSlice";
 const { loginPage, signoutPage } = defaultConfig;
 const useAuth = () => {
   const dispatch = useDispatch();
@@ -25,7 +23,7 @@ const useAuth = () => {
   };
 
   const logout = () => {
-    return dispatch(logoutServer());
+    return dispatch(logoutGoogleServer());
   };
 
 

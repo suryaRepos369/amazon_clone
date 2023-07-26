@@ -5,7 +5,7 @@ import { AxiosClient } from "./../../http/axios/axiosClient";
 import { isJwtExpired } from "jwt-check-expiration";
 import { getApi } from "../../http/axios/axiosClient";
 import {auth, provider} from '../../firebaseAuth//firebaseConfig'
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, signOut } from 'firebase/auth';
 
 var v = false;
 
@@ -74,11 +74,12 @@ const authSlice = createSlice({
       console.log("logoutMessage:", state.logoutMessage);
     },
     setLogin(state, action ){
-      const { islogged, error, loading, message } = action.payload;
+      const { islogged, error, loading, message, userData } = action.payload;
       state.logoutLoading = loading;
       state.logoutError = error;
       state.logoutMessage = message;
       state.islogged = islogged;
+      state.userData = userData
     }
   },
   extraReducers: (builder) => {
@@ -96,7 +97,6 @@ const authSlice = createSlice({
         state.error = "Page not found";
       } else {
         state.islogged = true;
-
         state.UserData = action.payload;
         // console.log("action.payload:", action.payload.data);
         localStorage.setItem("rrtfaca", action.payload.data.TOKEN);
@@ -153,7 +153,30 @@ export const logoutServer = () => async (dispatch) => {
     dispatch(authActions.logout({ islogged: true, error: error.response?.data, loading: false, message: null }));
   }
 };
-
+export const logoutGoogleServer = () => async (dispatch) => {
+  // dispatch(authActions.check());
+  dispatch(
+    authActions.logout({
+      islogged: false,
+      error: null,
+      loading: true,
+      message: null,
+    })
+  );
+  try {
+    signOut(auth).then((res)=>{
+      console.log({res})
+      if(res)
+     dispatch(authActions.logout({ islogged: false, error: null, loading: false, message: "Logged out successfully" }));
+     }).catch((er)=>{
+       throw new Error(er)
+     })
+  } catch (error) {
+    console.log("error:", error);
+    console.log("error:", error.response?.data);
+    dispatch(authActions.logout({ islogged: true, error: error.response?.data, loading: false, message: null }));
+  }
+};
 // const signInGoogle = () => {
 //   signInWithPopup(auth, provider)
 //     .then((res) => {
@@ -171,15 +194,16 @@ export const loginServer = () => async (dispatch) => {
       error: null,
       loading: true,
       message: 'logging...',
+      userData:[]
     })
   );
   try {
     let a = await signInWithPopup(auth, provider);
     localStorage.setItem("email",a.user.email)
     console.log({a})
-    dispatch(authActions.logout({ islogged: true, error: null, loading: false, message: "Logged in  successfully" }));
+    dispatch(authActions.setLogin({ islogged: true, error: null,userData:a.user, loading: false, message: "Logged in  successfully" }));
   } catch (error) {
-    dispatch(authActions.logout({ islogged: false, error: error.response?.data, loading: false, message: null }));
+    dispatch(authActions.setLogin({ islogged: false,userData:[], error: error.response?.data, loading: false, message: null }));
   }
 };
 

@@ -20,7 +20,7 @@ const Logout = () => {
 
   async function logoutHandler() {
     console.log("logout clicked");
-    let res = logout();
+    let res =  logout();
 
     console.log("res:", res);
 
@@ -28,10 +28,10 @@ const Logout = () => {
       res,
       {
         pending: "Logging out...",
-        // success: "Logged out  👌",
-        // error: `Error :${logoutError}`,
+        success: "Logged out  👌",
+        error: `Error :${logoutError}`,
       },
-      { autoClose: 1000 }
+      { autoClose: 2000 }
     );
   }
   return (

@@ -1,10 +1,9 @@
 import "./App.css";
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { routes } from "./routes";
 import Layout from "./Layout/Layout";
 import RequireAuth from "./Components/RequireAuth";
-import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   // setting the route through the layout component

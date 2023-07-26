@@ -11,6 +11,7 @@ import logo from "./headerlogo.png";
 const Header = (props) => {
   const { auth } = useAuth();
   const { cartQuantity } = useCart();
+  const user = useSelector((state) => state.auth.userData);
 
   const cartCount = useSelector((state) => state.dress.count);
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const Header = (props) => {
             <div
               onClick={accountHandler}
               className="text-white mx-1 link-wo-a flex flex-col justify-around ">
-              <p className="m-1">Hello {"surya"} </p>
+              <p className="m-1">{user.displayName ?`Welcome back ${user.displayName}`:"Hi "} </p>
               <p className="font-bold">Account&List</p>
             </div>
           ) : (

@@ -4,9 +4,13 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useSelector } from "react-redux";
 //import { ProgressBar } from "react-loader-spinner";
 //import useAuth from './../../../hooks/useAuth';
 const AccountDetails = () => {
+  const user = useSelector((state) => state.auth.userData);
+ 
+
   return (
     <>
       <div className="card w-100 h-100">
@@ -26,8 +30,12 @@ const AccountDetails = () => {
               <div className="card">
                 <div className="card-body">
                   <h6 className="cart-title">User Name</h6>
-                  <div className="card-content bg-slate-100">
-                    <p>{"surya@gmail.com"}</p>
+                  <div className="card-content bg-slate-100 text-">
+                    <p>{user.displayName}</p>
+                  </div>
+                  <h6 className="cart-title">Email</h6>
+                  <div className="card-content bg-slate-100 text-xs">
+                    <p>{user.email}</p>
                   </div>
                 </div>
               </div>
